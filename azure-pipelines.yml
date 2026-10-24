@@ -1,0 +1,22 @@
+# Requires an Azure DevOps organization and an available agent.
+# Not executed or deployed by the authoring workflow.
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-latest
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.12'
+  - script: python -m unittest discover -s tests -v
+    displayName: Run regression tests
+  - script: python -m scripts.evaluate
+    displayName: Evaluate retrieval and safety
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)'
+      includeRootFolder: false
+      archiveType: zip
+      archiveFile: '$(Build.ArtifactStagingDirectory)/policy-risk-assistant.zip'
+  - publish: '$(Build.ArtifactStagingDirectory)/policy-risk-assistant.zip'
+    artifact: application

@@ -1,0 +1,1 @@
+# Core app uses only the Python standard library. No pip install required.

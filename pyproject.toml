@@ -1,0 +1,7 @@
+[project]
+name = "policy-risk-assistant"
+version = "0.1.0"
+description = "Local AI engineering portfolio with evidence-backed procurement review"
+requires-python = ">=3.11"
+[tool.ruff]
+line-length = 120
